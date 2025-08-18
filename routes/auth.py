@@ -15,9 +15,10 @@ def register():
 
         if username in users:
             flash("User already exists !", "error")
+            return redirect(url_for("auth.register"))
         users[username] = password
 
-        flash("Log in success !", "success")
+        flash("Register success ! Please log in. ", "success")
         return redirect(url_for("auth.login"))
     
 
@@ -30,9 +31,9 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        if username != "admin" or password != "123":
+        if username not in users or users[username] != password:
             flash("Wrong user or password !", "error")
-            return redirect(url_for("login"))
+            return redirect(url_for("auth.login"))
 
         flash("Log in success !", "success")
         return redirect(url_for("home"))

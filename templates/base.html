@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Flask App{% endblock %}</title>
+    <title>{% block title %}SHEIN App{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -15,16 +15,22 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class=" border-b shadow-sm">
+    <header class=" border-b shadow-sm py-4 px-4">
         <div class=" max-w-7xl mx-auto flex justify-between">
             <!-- Logo -->
-            <a href="{{ url_for('home')}} " class=" text-2xl font-bold tracking-wide">SHEIN</a>
-           
+            <a href="{{ url_for('home')}} " class=" text-3xl font-bold tracking-wide">SHEIN</a>
+          
             <!-- Search bar -->
-            <div>
-                <input type="text" placeholder="What are you looking for ? "
-                    class="w-full border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
-                />
+            <div class="flex-1 mx-8">
+                <form class="flex">
+                    <input type="text" placeholder="What are you looking for ? "
+                        class="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                    />
+                    <!-- TODO: Search button -->
+                    <button type="submit" class="bg-black text-white px-6 py-3 rounded-r-md hover:bg-gray-800 flex items-center gap-2">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                </form>
             </div>
 
 
@@ -32,26 +38,31 @@
             <nav class="flex items-center gap-6">
                 <!-- User dropdown  -->
                 <div class=" relative group cursor-pointer ">
-                    <i data-lucide="user" class="w-6 h-6"></i>
+                    <a href="{{url_for('auth.login')}}">
+                        <i data-lucide="user" class="w-6 h-6"></i>
+                    </a>
                     <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 invisible 
                     group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                        <a href="{{url_for('login')}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
-                        <a href="{{url_for('register')}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Register</a>
+                        <a href="{{ url_for('auth.login') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
+                        <a href="{{ url_for('auth.register') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Register</a>                    
                     </div>
                 </div>
                 <!-- TODO: Customer service -->
                 <!-- TODO: Currency change -->
                 <!-- Cart -->
-                <button class="relative">
+                <a href="{{ url_for('mycart') }}" class="relative inline-block">
                     <i data-lucide="shopping-cart" class="w-6 h-6"></i>
-                    <span class="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
-                </button>
+                    <span class="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    0
+                    </span>
+                </a>
+  
             </nav>
         </div>
     </header>
 
     <!-- Content  -->
-    <main class=" flex-grow">
+    <main class="content flex-grow">
         {% block content %} {% endblock %}
     </main>
 
