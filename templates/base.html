@@ -5,10 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Flask App{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+      });
+    </script>
 </head>
-<body>
-    <div class="content">
+<body class="min-h-screen flex flex-col">
+
+    <!-- Header -->
+    <header class=" border-b shadow-sm">
+        <div class=" max-w-7xl mx-auto flex justify-between">
+            <!-- Logo -->
+            <a href="{{ url_for('home')}} " class=" text-2xl font-bold tracking-wide">SHEIN</a>
+           
+            <!-- Search bar -->
+            <div>
+                <input type="text" placeholder="What are you looking for ? "
+                    class="w-full border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+                />
+            </div>
+
+
+            <!-- Right section -->
+            <nav class="flex items-center gap-6">
+                <!-- User dropdown  -->
+                <div class=" relative group cursor-pointer ">
+                    <i data-lucide="user" class="w-6 h-6"></i>
+                    <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 invisible 
+                    group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        <a href="{{url_for('login')}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
+                        <a href="{{url_for('register')}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Register</a>
+                    </div>
+                </div>
+                <!-- TODO: Customer service -->
+                <!-- TODO: Currency change -->
+                <!-- Cart -->
+                <button class="relative">
+                    <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                    <span class="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Content  -->
+    <main class=" flex-grow">
         {% block content %} {% endblock %}
-    </div>
+    </main>
+
+      <!-- Footer -->
+    <footer class="bg-gray-100 text-center py-6 mt-6">
+        <p class="text-sm text-gray-500">&copy; 2025 MyShop. All rights reserved.</p>
+    </footer>
 </body>
 </html>

@@ -6,8 +6,6 @@ flask-login
 flask-bcrypt
 flask-wtf
 python-dotenv
-jinja2
-flask-cors
-flask-mail
-pytest
-flask-debugtoolbar
+# Icon
+icons-material
+lucide-react
