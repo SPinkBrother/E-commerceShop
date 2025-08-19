@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, redirect
-from routes.auth import auth_bp
-app = Flask(__name__)
-app.config["SECRET_KEY"] = "ahsdjkhasdas"
+from app import create_app
 
+app = create_app()
 
-# Blueprint for auth
-app.register_blueprint(auth_bp)
 
 
 # Home route
