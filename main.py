@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, redirect
-from app import create_app
+from flask_migrate import Migrate
+from app import create_app,db
 
 app = create_app()
+migrate = Migrate(app, db)
 
 
 

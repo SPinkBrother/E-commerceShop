@@ -38,25 +38,37 @@
             <nav class="flex items-center gap-6">
                 <!-- User dropdown  -->
                 <div class=" relative group cursor-pointer ">
-                    <a href="{{url_for('auth.login')}}">
+                    <!-- TODO: fix the button -->
+                    <a href="#">
                         <i data-lucide="user" class="w-6 h-6"></i>
                     </a>
                     <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 invisible 
                     group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                    
+                    {% if current_user.is_authenticated %}
+                        <!-- Authenticated -->
+                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+                        <a href="{{ url_for('mycart') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Your cart</a>
+                        <a href="{{ url_for('auth.register') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Log out</a>     
+                    {% else %}                    
+                        <!-- If not authenticated -->
                         <a href="{{ url_for('auth.login') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
-                        <a href="{{ url_for('auth.register') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Register</a>                    
+                        <a href="{{ url_for('auth.register') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Register</a>                 
+                        
+                    {% endif %}
                     </div>
                 </div>
                 <!-- TODO: Customer service -->
                 <!-- TODO: Currency change -->
                 <!-- Cart -->
+                {% if  current_user.is_authenticated %}
                 <a href="{{ url_for('mycart') }}" class="relative inline-block">
                     <i data-lucide="shopping-cart" class="w-6 h-6"></i>
                     <span class="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                     0
                     </span>
                 </a>
-  
+                {% endif %}
             </nav>
         </div>
     </header>
