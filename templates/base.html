@@ -19,7 +19,7 @@
         <div class=" max-w-7xl mx-auto flex justify-between items-center">
             <!-- Logo -->
             <a href="{{ url_for('home')}} " class=" text-3xl font-bold tracking-wide">SHEIN</a>
-          
+         
             <!-- Search bar -->
             <div class="flex-1 mx-8">
                 <form class="flex">
@@ -39,7 +39,12 @@
                 <!-- User dropdown  -->
                 <div class=" relative group cursor-pointer ">
                     <!-- TODO: fix the button -->
-                    <a href="#">
+                    <a href="   {% if current_user.is_authenticated %}
+                                    {{ url_for('profile', user_id=current_user.id) }}
+                                {% else %}
+                                    {{ url_for('auth.login', )}}
+                                {% endif %}
+                            ">
                         <i data-lucide="user" class="w-6 h-6"></i>
                     </a>
                     <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 invisible 
@@ -47,7 +52,7 @@
                     
                     {% if current_user.is_authenticated %}
                         <!-- Authenticated -->
-                        <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+                        <a href="{{ url_for('profile',user_id = current_user.id )}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
                         <a href="{{ url_for('mycart') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Your cart</a>
                         <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Log out</a>     
                     {% else %}                    
