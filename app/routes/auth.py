@@ -19,24 +19,37 @@ def register():
         existing_user =  User.query.filter(
             (User.username == username) | (User.email == email)
         ).first()
+
         if existing_user:
             flash("User or email already exist !", "error")
             return redirect(url_for("auth.register"))
-
+        elif len(username) < 3:
+            flash("User must be at least 3 characters", "error") 
+        elif len(email) < 4:
+            # TODO: check if email have @ yet
+            flash("Email must be at least 4 characters", "error") 
+        elif len(first_name) < 2:
+            flash("First name must be at least 2 characters", "error")
+        elif len(last_name) < 2:
+            flash("Last name must be at least 2 characters", "error") 
+        elif len(password) < 7:
+            flash("Password must be at least 7 characters", "error") 
+        else:
         # POST method
-        new_user = User(
-            username=username,
-            email=email,
-            first_name = first_name,
-            last_name = last_name,
+            new_user = User(
+                username=username,
+                email=email,
+                first_name = first_name,
+                last_name = last_name,
 
-        )
-        new_user.set_password(password)
-        db.session.add(new_user)
-        db.session.commit()
+            )
+            new_user.set_password(password)
+            db.session.add(new_user)
+            db.session.commit()
 
-        flash("Create account successfully !","success")
-        return redirect(url_for("auth.login"))   
+            flash("Create account successfully !","success")
+            return redirect(url_for("auth.login")) 
+        return redirect(url_for("auth.register"))  
 
     return render_template("register.html")
 
@@ -53,7 +66,6 @@ def login():
             return redirect(url_for("auth.login"))
         
         login_user(user)
-        flash("Log in success !", "success")
         return redirect(url_for("home"))
     return render_template("login.html")
 
@@ -62,5 +74,4 @@ def login():
 @login_required
 def logout():
     logout_user()
-    flash("Log out success!", "info")
     return redirect(url_for("home"))

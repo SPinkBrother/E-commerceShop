@@ -15,69 +15,75 @@
 <body class="min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class=" border-b shadow-sm py-4 px-4">
-        <div class=" max-w-7xl mx-auto flex justify-between items-center">
-            <!-- Logo -->
-            <a href="{{ url_for('home')}} " class=" text-3xl font-bold tracking-wide">SHEIN</a>
-         
-            <!-- Search bar -->
-            <div class="flex-1 mx-8">
-                <form class="flex">
-                    <input type="text" placeholder="What are you looking for ? "
-                        class="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
-                    />
-                    <!-- TODO: Search button -->
-                    <button type="submit" class="bg-black text-white px-6 py-3 rounded-r-md hover:bg-gray-800 flex items-center gap-2">
-                        <i data-lucide="search" class="w-5 h-5"></i>
-                    </button>
-                </form>
-            </div>
+<!-- Header -->
+<header class="border-b shadow-sm">
+    <div class="max-w-full mx-auto flex justify-between items-center py-4 px-16">
+        <!-- Logo -->
+        <div class="">
+            <a href="{{ url_for('home')}}" class="text-3xl font-bold tracking-wide">SHEIN</a>
+        </div>
+        
+        <!-- Search bar -->
+        <div class="flex-1 mx-8">
+            <form class="flex">
+                <input type="text" placeholder="What are you looking for ? "
+                    class="w-full border border-gray-300 px-4 py-3 text-sm focus:outline-none focus:ring-1 focus:ring-black"
+                />
+                <button type="submit" class="bg-black text-white px-6 py-3 rounded-r-md hover:bg-gray-800 flex items-center gap-2">
+                    <i data-lucide="search" class="w-5 h-5"></i>
+                </button>
+            </form>
+        </div>
 
-
-            <!-- Right section -->
-            <nav class="flex items-center gap-6">
-                <!-- User dropdown  -->
-                <div class=" relative group cursor-pointer ">
-                    <!-- TODO: fix the button -->
-                    <a href="   {% if current_user.is_authenticated %}
-                                    {{ url_for('profile', user_id=current_user.id) }}
-                                {% else %}
-                                    {{ url_for('auth.login', )}}
-                                {% endif %}
-                            ">
-                        <i data-lucide="user" class="w-6 h-6"></i>
-                    </a>
-                    <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 invisible 
-                    group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                    
+        <!-- Right section -->
+        <nav class="flex items-center gap-6">
+            <!-- User dropdown -->
+            <div class="relative group cursor-pointer">
+                <a href="{% if current_user.is_authenticated %}
+                              {{ url_for('profile', user_id=current_user.id) }}
+                          {% else %}
+                              {{ url_for('auth.login') }}
+                          {% endif %}">
+                    <i data-lucide="user" class="w-6 h-6"></i>
+                </a>
+                <div class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg opacity-0 invisible 
+                            group-hover:opacity-100 group-hover:visible transition-all duration-200">
                     {% if current_user.is_authenticated %}
-                        <!-- Authenticated -->
-                        <a href="{{ url_for('profile',user_id = current_user.id )}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
+                        <a href="{{ url_for('profile',user_id=current_user.id)}}" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
                         <a href="{{ url_for('mycart') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Your cart</a>
                         <a href="{{ url_for('auth.logout') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Log out</a>     
                     {% else %}                    
-                        <!-- If not authenticated -->
                         <a href="{{ url_for('auth.login') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Login</a>
                         <a href="{{ url_for('auth.register') }}" class="block px-4 py-2 text-sm hover:bg-gray-100">Register</a>                 
-                        
                     {% endif %}
-                    </div>
                 </div>
-                <!-- TODO: Customer service -->
-                <!-- TODO: Currency change -->
-                <!-- Cart -->
-                {% if  current_user.is_authenticated %}
-                <a href="{{ url_for('mycart') }}" class="relative inline-block">
-                    <i data-lucide="shopping-cart" class="w-6 h-6"></i>
-                    <span class="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                    0
-                    </span>
-                </a>
-                {% endif %}
-            </nav>
-        </div>
-    </header>
+            </div>
 
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('mycart') }}" class="relative inline-block">
+                <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+                <span class="absolute -top-2 -right-2 bg-black text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    0
+                </span>
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+
+    <!-- Category nav - full width -->
+    <nav class="bg-white pl-8">
+        <ul class="flex justify-left gap-8 py-3 text-sm font-medium">
+            <li><a href="#" class="hover:text-black">Women</a></li>
+            <li><a href="#" class="hover:text-black">Men</a></li>
+            <li><a href="#" class="hover:text-black">Kids</a></li>
+            <li><a href="#" class="hover:text-black">Beauty</a></li>
+            <li><a href="#" class="hover:text-black">Sale</a></li>
+        </ul>
+    </nav>
+</header>
+
+  
+    
     <!-- Content  -->
     <main class="content flex-grow">
         {% block content %} {% endblock %}
